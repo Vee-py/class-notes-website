@@ -97,4 +97,4 @@ Screenshot of the terminated instance: ![Terminated instance](docs/screenshots/t
 - `.gitignore`: blocks `*.pem` key files from being uploaded
 - `docs/screenshots/`: screenshots used in this README
 
-> Never upload `.pem` keys, passwords or AWS access keys to this repo.
+
