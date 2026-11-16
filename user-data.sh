@@ -1,0 +1,190 @@
+#!/bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+cat << 'EOF' > /var/www/html/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Notes Hub</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2e3d;
+    --text: #e8eaf0;
+    --muted: #9aa1b5;
+    --accent: #7c8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    padding: 56px 20px 24px;
+  }
+  h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: var(--accent); }
+  header p {
+    color: var(--muted);
+    max-width: 480px;
+    margin: 12px auto 0;
+  }
+  .filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px 20px 28px;
+  }
+  .filters button {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .filters button:hover { border-color: var(--accent); }
+  .filters button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f1117;
+    font-weight: 600;
+  }
+  main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px 56px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+  .card small {
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .card h2 {
+    font-size: 1.2rem;
+    margin: 4px 0 16px;
+  }
+  .card a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    background: #232738;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 0.92rem;
+    transition: background 0.2s;
+  }
+  .card a:hover { background: var(--accent); color: #0f1117; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 0 20px 32px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Class Notes <span>Hub</span></h1>
+  <p>Welcome! Pick your semester and download lecture notes for your units.</p>
+</header>
+
+<nav class="filters" aria-label="Filter by semester">
+  <button class="active" data-sem="all">All</button>
+  <button data-sem="1">Semester 1</button>
+  <button data-sem="2">Semester 2</button>
+</nav>
+
+<main id="units"></main>
+
+<footer>&copy; Class Notes Hub</footer>
+
+<script>
+ 
+  const BASE = "https://class-notes-hub-04.s3.eu-north-1.amazonaws.com/public/";
+
+   const units = [
+    { name: "Intro to Programming", sem: 1,
+      files: ["week-1-notes.pdf"] },
+    { name: "Calculus I", sem: 1,
+      files: ["week-2-notes.pdf"] },
+    { name: "Networks", sem: 2,
+      files: ["week-3-notes.pdf"] }
+  ];
+
+  const container = document.getElementById("units");
+  const buttons = document.querySelectorAll(".filters button");
+
+  function render(sem) {
+    container.innerHTML = "";
+    units
+      .filter(u => sem === "all" || String(u.sem) === sem)
+      .forEach(u => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const label = document.createElement("small");
+        label.textContent = "Semester " + u.sem;
+
+        const title = document.createElement("h2");
+        title.textContent = u.name;
+
+        card.append(label, title);
+
+        u.files.forEach((file, i) => {
+          const link = document.createElement("a");
+          link.href = BASE + file;
+          link.textContent = "Download Notes";
+          link.setAttribute("download", "");
+          card.appendChild(link);
+        });
+
+        container.appendChild(card);
+      });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render(btn.dataset.sem);
+    });
+  });
+
+  render("all");
+</script>
+</body>
+</html>
+EOF
