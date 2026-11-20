@@ -36,7 +36,7 @@ Internet Gateway --> Public subnet (in my VPC)
 2. **Created the S3 bucket** `class-notes-hub-04` and uploaded the PDFs into a `public/` folder.![S3 Bucket](docs/screenshots/Screenshot%202026-11-15%20185252.png) 
 3. **Turned off Block Public Access** for the bucket and added a bucket policy that allows `s3:GetObject` only on `public/*`. 
 4. **Tested a PDF link directly** in the browser to confirm S3 access worked.![PDF Test](docs/screenshots/Screenshot%202026-11-17%20000956.png)
-5. **Created a security group** allowing HTTP from anywhere and SSH from my IP only. 
+5. **Created a security group** allowing HTTP from anywhere and SSH from my IP only. ![security group](docs/screenshots/Screenshot%202026-11-15%20201604.png)
 6. **Launched the EC2 instance** in the public subnet with auto-assign public IP enabled and the user data script (`user-data.sh`).
 7. **Opened `public ip`** and tested every download button. !Instance was terminated to avoid accumulating costs.
 8. **Cleaned up** by terminating the instance when finished. ![Terminated instance]
