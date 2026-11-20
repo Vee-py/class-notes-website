@@ -38,7 +38,7 @@ Internet Gateway --> Public subnet (in my VPC)
 4. **Tested a PDF link directly** in the browser to confirm S3 access worked.
 5. **Created a security group** allowing HTTP from anywhere and SSH from my IP only. 
 6. **Launched the EC2 instance** in the public subnet with auto-assign public IP enabled and the user data script (`user-data.sh`).
-7. **Opened `http://<public-ip>`** and tested every download button. !
+7. **Opened `http://13.51.48.17`** and tested every download button. !
 8. **Cleaned up** by terminating the instance when finished. ![Terminated])
 
 ### Bucket policy used
