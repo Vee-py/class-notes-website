@@ -26,7 +26,7 @@ Internet Gateway --> Public subnet (in my VPC)
 - **VPC:** [notes-vpc-vanessa / CIDR, e.g. 10.0.0.0/16]
 - **Public subnet:** [notes-public-subnet]. Its route table sends `0.0.0.0/0` to the internet gateway, so the web server is reachable.
 - **Private subnet:** [notes-private-subnet]. It has no route to the internet gateway, so it is meant for resources that should not be exposed, such as databases.
-- **EC2:** [FILL IN: instance type, e.g. t3.micro] running Amazon Linux with Apache (`httpd`), set up automatically by a user data script.
+- **EC2:** [ t3.micro] running Amazon Linux with Apache (`httpd`), set up automatically by a user data script.
 - **S3:** bucket `class-notes-hub-04` in `eu-north-1`. Notes are stored under `public/`.
 - **Security group:** HTTP (80) from anywhere, SSH (22) from My IP only.
 
