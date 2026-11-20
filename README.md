@@ -88,7 +88,7 @@ Internet Gateway --> Public subnet (in my VPC)
 
 ## Proof of clean-up
 
-Screenshot of the terminated instance: ![Terminated instance](docs/screenshots/terminated.png)
+Screenshot of the terminated instance:Screenshot 2026-11-17 001230.png
 
 ## Files in this repo
 
