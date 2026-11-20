@@ -39,7 +39,7 @@ Internet Gateway --> Public subnet (in my VPC)
 5. **Created a security group** allowing HTTP from anywhere and SSH from my IP only. ![Security group](docs/screenshots/security-group.png)
 6. **Launched the EC2 instance** in the public subnet with auto-assign public IP enabled and the user data script (`user-data.sh`). ![Launch](docs/screenshots/ec2-launch.png)
 7. **Opened `http://<public-ip>`** and tested every download button. ![Website](docs/screenshots/website.png)
-8. **Cleaned up** by terminating the instance when finished. ![Terminated](docs/screenshots/terminated.png)
+8. **Cleaned up** by terminating the instance when finished. ![Terminated](Screenshot 2026-11-17 001230.png)
 
 ### Bucket policy used
 
